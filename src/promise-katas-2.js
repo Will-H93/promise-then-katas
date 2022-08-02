@@ -25,17 +25,28 @@ fetch("joke", "question").then(<insert your callback function>)
 // 1 Create a function that uses the fetch function to make a request to the "food" URL and returns
 // the data - expected return value "Cheese" of type String
 
-const food = () => {};
+const food = async() => {
+    const response = await fetch('food')
+    return response.data
+}
 
 // 2 Create a function that uses the fetch function to make a request to the "cats" URL and returns
 // a list of cats in alphabetical order - expected return value ["Bandit", "Berry", "Puss in boots", "Smokey"] of type Array
 
-const cat = () => {};
+const cat = async() => {
+    const response = await fetch('cats')
+    return response.data.cats.sort();
+};
 
 // 3 Create a function that uses the fetch function to make a request to the "dogs" URL and returns
 // the naughtiest dog - expected return value {name: "Mutley", naughty: 10} of type Object
 
-const dog = () => {};
+const dog = async() => {
+    const response = await fetch('dogs')
+    return response.data.dogs.sort((a, b) => {
+        return b.naughty - a.naughty
+    })[0]
+};
 
 // 4 Create a function that uses the fetch function to make requests to the "jokes" URL and returns
 // a joke object with the key of question and answer - expected return { 
@@ -47,7 +58,11 @@ const dog = () => {};
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
 //
 
-const joke = () => {};
+const joke = async() => {
+    const jokeResponse = await fetch('jokes', "question");
+    const answerResponse = await fetch('jokes')
+    return {question: jokeResponse.joke, answer: answerResponse.answer}
+};
 
 module.exports = {
     food,
